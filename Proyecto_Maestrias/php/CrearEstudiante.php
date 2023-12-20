@@ -42,7 +42,11 @@
 	$consultaCedula = mysqli_query($conexion, $consultaCedula);
 	$consultaCedula = mysqli_fetch_array($consultaCedula);
 
-	if(!$consultaCedula){
+	$consultaCedula1 = "SELECT Cedula FROM persona WHERE Cedula = '$cedula' ";
+	$consultaCedula1 = mysqli_query($conexion, $consultaCedula1);
+	$consultaCedula1 = mysqli_fetch_array($consultaCedula1);
+
+	if(!$consultaCedula && !$consultaCedula1){
 		if(!$consultaId && !$consultaId1){
 			$fechaegreso = "00/00/00";
 			$codigocohorte = 0;

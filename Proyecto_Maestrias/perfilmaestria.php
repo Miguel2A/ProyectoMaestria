@@ -101,6 +101,252 @@ include("php/validarSesion.php");
         <div class="card col-10 border-black" style="background-color: #F0F2EE;">
           <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example p-3 rounded-2 " tabindex="0">
             <h4 id="scrollspyHeading1" align="center"><b><i>INFORMACION MAESTRIAS</i></b></h4>
+            
+            <?php
+                      if($inc){
+                        $id1 = htmlspecialchars($_GET['id']);
+                        $consulta = "SELECT * FROM programa WHERE CodSNIES = '$id1' ";
+                        $resultado = mysqli_query($conexion,$consulta);
+                        if($resultado){
+                          while ($row = $resultado->fetch_array()) {
+                            $codigosnies       = $row['CodSNIES'];
+                            $nomprograma       = $row['NomPrograma'];
+                            $descripcion       = $row['Descripcion'];
+                            $logo              = $row['Logo'];
+                            $correo            = $row['Correo'];
+                            $lineatrabajo      = $row['LineaTrabajo'];
+                            $fecharesolucion   = $row['FechaResolucion'];
+                            $numeroresolucion  = $row['NumeroResolucion'];
+                            $archivoresolucion = $row['ArchivoResolucion'];
+                            $numeroestudiantes = $row['NumEstudiantes'];
+                           
+                              ?>
+                              <table class="table table-striped">
+                                <tr align="center">
+                                  <td>
+                                    <b>CODIGO SNIES</b> 
+                                  </td>
+                                  <td>
+                                    <?php echo $codigosnies; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>NOMBRE</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $nomprograma; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>DESCRIPCION</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $descripcion; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>LOGO</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $logo; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>CORREO</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $correo; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>LINEA DE TRABAJO</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $lineatrabajo; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>FECHA DE RESOLUCION</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $fecharesolucion; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>NUMERO DE RESOLUCION</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $numeroresolucion; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>ARCHIVO DE RESOLUCION</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $archivoresolucion; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>NUMERO DE ESTUDIANTES</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $numeroestudiantes; ?>
+                                  </td>
+                                </tr>
+                                
+                              </table>
+                              <?php
+                          }
+                        }
+                      }
+                      ?>
+
+                <br><br>
+                <h4 id="scrollspyHeading2" align="center"><b><i>LISTADO DE ESTUDIANTES MATRICULADOS</i></b></h4>
+                <p> 
+                  <table class="table table-striped bg-white">
+                    <tr align="center">
+                      <td>
+                        <b>COD_EST</b> 
+                      </td>
+                      <td>
+                        <b>CEDULA</b> 
+                      </td>
+                      <td>
+                        <b>NOMBRES</b> 
+                      </td>
+                      <td>
+                        <b>APELLIDOS</b> 
+                      </td>
+                    </tr>
+                    <tbody class="table-group-divider">
+                      <?php
+                      if($inc){
+                        $consulta = "SELECT estudiante.CodEstudiante, estudiante.Cedula, estudiante.CodSNIES, estudiante.Semestre, persona.Nombres, persona.Apellidos FROM
+                        estudiante inner join persona on estudiante.Cedula = persona.Cedula ";
+                        $resultado = mysqli_query($conexion,$consulta);
+                        if($resultado){
+                          while ($row2 = $resultado->fetch_array()) {
+                            $codigoestudiante = $row2['CodEstudiante'];
+                            $cedula = $row2['Cedula'];
+                            $codigosnies = $row2['CodSNIES'];
+                            $semestre = $row2['Semestre'];
+                            $nombre = $row2['Nombres'];
+                            $apellido = $row2['Apellidos'];
+                            $codsnies12 = htmlspecialchars($_GET["id"]);
+                            if($codigosnies == $codsnies12){
+                              if($cedula){
+                                ?>
+                                <tr align="center">
+                                  <td>
+                                    <?php echo $codigoestudiante; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $cedula; ?>
+                                  </td>
+
+                                  <td>
+                                    <?php echo $nombre; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $apellido; ?>
+                                  </td>
+                                </tr>
+                                <?php
+                              }
+                            }
+                          }
+                        }
+                      }
+                      ?>
+                    </table>
+                  </p>
+              <br><br>
+              <h4 id="scrollspyHeading12" align="center"><b><i>LISTADO DE DOCENTES ASIGNADOS</i></b></h4>
+              <p> 
+                <table class="table table-striped">
+                  <tr align="center">
+                    <td>
+                      <b>COD_DOC</b> 
+                    </td>
+                    <td>
+                      <b>CEDULA</b>
+                    </td>
+                    <td>
+                      <b>NOMBRES</b>
+                    </td>
+                    <td>
+                      <b>APELLIDOS</b>
+                    </td>
+                  </tr>
+                  <tbody class="table-group-divider">
+                    <?php
+                    if($inc){
+                      $consulta2 = "SELECT docente.CodDocente, docente.Cedula, docente.Formacion, persona.Nombres, persona.Apellidos FROM
+                      docente inner join persona on docente.Cedula = persona.Cedula ";
+                      $resultado2 = mysqli_query($conexion,$consulta2);
+                      if($resultado2){
+                        while ($row3 = $resultado2->fetch_array()) {
+                          $codigodocente1 = $row3['CodDocente'];
+                          $cedula1 = $row3['Cedula'];
+                          $formacion1 = $row3['Formacion'];
+                          $nombre1 = $row3['Nombres'];
+                          $apellido1 = $row3['Apellidos'];
+
+                          
+
+                          if($cedula1){
+                            ?>
+                            
+                                <?php 
+                                $consultam = "SELECT CodDocente, CodSNIES FROM docente_programa ";
+                                $consultamx = mysqli_query($conexion, $consultam);
+
+                                while ($row34 = $consultamx->fetch_array()){
+                                  $codigodoc1 = $row34['CodDocente'];
+                                  $codigosnies1 = $row34['CodSNIES'];
+                                  $codsnies12 = htmlspecialchars($_GET["id"]);
+
+                                  if($codigodoc1 == $codigodocente1 && $codigosnies1 == $codsnies12 ){
+                                    ?>
+                                    <tr align="center">
+                                      <td>
+                                        <?php echo $codigodocente1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $cedula1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $nombre1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $apellido1; ?>
+                                      </td>
+                                    </tr>
+                                    
+                                    <?php
+                                  }
+                                }
+                                ?>
+                            <?php
+                          }else{
+                          }
+                        }
+                      }
+                    }
+                    ?>
+                  </table>
+                </p>
+            
           </div>
         </div>
       </div>
@@ -154,27 +400,8 @@ include("php/validarSesion.php");
                               </td>
                               <td colspan="2">
                                 <select class="form-select" aria-label="Default select example" name="codigosnies">
-                                <?php
-                                $consultapre = "SELECT Cedula FROM presidente WHERE Cedula = '$_SESSION[cedula]' ";
-                                $consultapre = mysqli_query($conexion, $consultapre);
-                                $consultapre = mysqli_fetch_array($consultapre);
-
-                                if($consultapre){
-                                  $sql_maestriasx="SELECT CodSNIES FROM programa";
-                                  $consulta_maestriasx=mysqli_query($conexion,$sql_maestriasx);
-                                  while($mostrar_maestriasx=mysqli_fetch_array($consulta_maestriasx)){
-                                    ?>
-                                    <option  value="<?php echo $mostrar_maestriasx['CodSNIES'] ?>"><?php echo $mostrar_maestriasx['CodSNIES'] ?></option>
-                                    <?php
-                                  }
-                                  ?> 
-                                  <?php
-                                }else{
-                                  ?> 
-                                  <option  value="<?php echo htmlspecialchars($_GET["id"]) ; ?>"><?php echo htmlspecialchars($_GET["id"]) ; ?></option>
-                                  <?php
-                                }
-                                ?>
+                                  <option  value="<?php echo htmlspecialchars($_GET["id"]) ; ?>"><?php echo htmlspecialchars($_GET["id"]) ; ?></option> -->
+                                
                                 </select>
                               </td>
                             </tr>
@@ -321,8 +548,122 @@ include("php/validarSesion.php");
           <div class="row h-100 justify-content-center align-items-center">
             <div class="card col-10 border-black" style="background-color: #F0F2EE;">
               <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-transparent p-3 rounded-2 text-black" tabindex="0">
-                
-                
+                <h4 id="scrollspyHeading2" align="center"><b><i>VISUALIZAR ESTUDIANTES</i></b></h4>
+                <p> 
+                  <table class="table table-striped bg-white">
+                    <tr align="center">
+                      <td>
+                        <b>COD_EST</b> 
+                      </td>
+                      <td>
+                        <b>CEDULA</b> 
+                      </td>
+
+                      <td>
+                        <b>NOMBRES</b> 
+                      </td>
+                      <td>
+                        <b>APELLIDOS</b> 
+                      </td>
+                      <td>
+                        <b>CORREO</b> 
+                      </td>
+                      <td>
+                        <b>TELEFONO</b> 
+                      </td>
+                      <td>
+                        <b>DIRECCION</b> 
+                      </td>
+                      <td>
+                        <b>CIUDAD</b> 
+                      </td>
+                      <td>
+                        <b>GENERO</b> 
+                      </td>
+                      <td>
+                        <b>FECHA N</b> 
+                      </td>
+                      <td>
+                        <b>EST CIVIL</b> 
+                      </td>
+                      <td>
+                        <b>SEMESTRE</b> 
+                      </td>
+                    </tr>
+                    <tbody class="table-group-divider">
+                      <?php
+                      if($inc){
+                        $consulta = "SELECT estudiante.CodEstudiante, estudiante.Cedula, estudiante.CodSNIES, estudiante.Semestre, persona.Nombres, persona.Apellidos, persona.Correo, persona.Telefono, persona.Direccion, persona.Ciudad, persona.Genero, persona.FechaNacimiento, persona.EstadoCivil FROM
+                        estudiante inner join persona on estudiante.Cedula = persona.Cedula ";
+                        $resultado = mysqli_query($conexion,$consulta);
+                        if($resultado){
+                          while ($row2 = $resultado->fetch_array()) {
+                            $codigoestudiante = $row2['CodEstudiante'];
+                            $cedula = $row2['Cedula'];
+                            $codigosnies = $row2['CodSNIES'];
+                            $semestre = $row2['Semestre'];
+                            $nombre = $row2['Nombres'];
+                            $apellido = $row2['Apellidos'];
+                            $correo = $row2['Correo'];
+                            $telefono = $row2['Telefono'];
+                            $direccion = $row2['Direccion'];
+                            $ciudad = $row2['Ciudad'];
+                            $genero = $row2['Genero'];
+                            $fechanacimiento = $row2['FechaNacimiento'];
+                            $estadocivil = $row2['EstadoCivil'];
+
+                            $codsnies12 = htmlspecialchars($_GET["id"]);
+                            if($codigosnies === $codsnies12){
+                              if($cedula){
+                                ?>
+                                <tr align="center">
+                                  <td>
+                                    <?php echo $codigoestudiante; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $cedula; ?>
+                                  </td>
+
+                                  <td>
+                                    <?php echo $nombre; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $apellido; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $semestre; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $telefono; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $direccion; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $ciudad; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $genero; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $fechanacimiento; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $estadocivil; ?>
+                                  </td>
+                                  <td>
+                                    <?php echo $semestre; ?>
+                                  </td>
+                                </tr>
+                                <?php
+                              }
+                            }
+                          }
+                        }
+                      }
+                      ?>
+                    </table>
+                  </p> 
                 <h4 id="scrollspyHeading4" align="center"><b><i>CONTACTOS</i></b></h4>
                 <p> 
                   <div class="card-group">
@@ -356,46 +697,104 @@ include("php/validarSesion.php");
           <div class="row h-100 justify-content-center align-items-center">
             <div class="card col-11 border-black" style="background-color: #F0F2EE;">
               <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-transparent p-3 rounded-2 text-black" tabindex="0">
-                
+                <table class="table table-striped bg-white">
+                  <tr align="center">
+                    <td>
+                      <b>COD_EST</b> 
+                    </td>
+                    <td>
+                      <b>CEDULA</b> 
+                    </td>
+                    <td>
+                      <b>NOMBRES</b> 
+                    </td>
+                    <td>
+                      <b>APELLIDOS</b> 
+                    </td>
+                    <td>
+                      <b>CORREO</b> 
+                    </td>
+                    <td>
+                      <b>TELEFONO</b> 
+                    </td>
+                    <td>
+                      <b>SEMESTRE</b> 
+                    </td>
+                  </tr>
+                  <tbody class="table-group-divider">
+                    <?php
+                    if($inc){
+                      $consulta7 = "SELECT estudiante.CodEstudiante, estudiante.Cedula, estudiante.Semestre, estudiante.CodSNIES, persona.Nombres, persona.Apellidos, persona.Correo, persona.Telefono FROM
+                      estudiante inner join persona on estudiante.Cedula = persona.Cedula ";
+                      $resultado3 = mysqli_query($conexion,$consulta7);
+                      if($resultado3){
+                        while ($roww10 = $resultado3->fetch_array()) {
+                          $codigoestudiante11          = $roww10['CodEstudiante'];
+                          $cedula11 = $roww10['Cedula'];
+                          $semestre11     = $roww10['Semestre'];
+                          $codigosnies11 = $roww10['CodSNIES'];
+                          $nombre11          = $roww10['Nombres'];
+                          $apellido11          = $roww10['Apellidos'];
+                          $correo11 = $roww10['Correo'];
+                          $telefono11          = $roww10['Telefono'];
+                          $codsnies13 = htmlspecialchars($_GET["id"]);
+                          if($codigosnies11 == $codsnies13){
+                            if($cedula11){
+                            ?>
+                            <tr align="center">
+                              <td>
+                                <?php echo $codigoestudiante11; ?>
+                              </td>
+                              <td>
+                                <?php echo $cedula11; ?>
+                              </td>
+
+                              <td>
+                                <?php echo $nombre11; ?>
+                              </td>
+                              <td>
+                                <?php echo $apellido11; ?>
+                              </td>
+                              <td>
+                                <?php echo $correo11; ?>
+                              </td>
+                              <td>
+                                <?php echo $telefono11; ?>
+                              </td>
+                              <td>
+                                <?php echo $semestre11; ?>
+                              </td>
+                            </tr>
+                            <?php
+                          }
+                          }
+                        }
+                      }
+                    }
+                    ?>
+                  </table>
                   <div class="container" align="center" style="width: 45rem;">
                     <form class="row g-3" name="modificar estudiante" method="POST" action="perfilmodificarestudiante.php" >
                       <table class="table table-striped" align="center">
                         <td align="center">
                          <div class="col-md-6">
                           <label for="coddd" class="form-label"><b>CODIGO</b></label>
-                          <?php
-                          $consulta_pre = "SELECT Cedula FROM presidente WHERE Cedula = '$_SESSION[cedula]' ";
-                          $consulta_pre = mysqli_query($conexion, $consulta_pre);
-                          $consulta_pre = mysqli_fetch_array($consulta_pre);
-
-                          if($consulta_pre){
-                            ?>
-                            <input type="number" name="codigo" placeholder="Codigo" class="form-control" id="validationDefault01" required>
-                            <?php
-                          }else{
-                            ?>
-                            <select class="form-select" aria-label="Default select example" name="codigo">
+                          <select class="form-select" aria-label="Default select example" name="codigo">
                               <?php
-                              $consulta_codigosnies = "SELECT CodSNIES FROM programa ";
+                              $consulta_codigosnies = "SELECT CodEstudiante, CodSNIES FROM estudiante ";
                               $consulta_codigosnies = mysqli_query($conexion, $consulta_codigosnies);
 
                               while($mostrar_codigosnies=mysqli_fetch_array($consulta_codigosnies))
                                 {
-                                  $consulta_codigosniesestu = "SELECT CodEstudiante, CodSNIES FROM estudiante WHERE CodSNIES = '$_SESSION[codigosnies]' ";
-                                  $consulta_codigosniesestu = mysqli_query($conexion, $consulta_codigosniesestu);
-                                  $consulta_codigosniesestu = mysqli_fetch_array($consulta_codigosniesestu);
-                                  if($mostrar_codigosnies['CodSNIES'] == $consulta_codigosniesestu['CodSNIES']){
+                                  if($mostrar_codigosnies['CodSNIES'] == htmlspecialchars($_GET["id"])){
                                     ?>
-                                      <option  value="<?php echo $consulta_codigosniesestu['CodEstudiante'] ?>"><?php echo $consulta_codigosniesestu['CodEstudiante'] ?></option>
+                                      <option  value="<?php echo $mostrar_codigosnies['CodEstudiante'] ?>"><?php echo $mostrar_codigosnies['CodEstudiante'] ?></option>
                                     <?php
                                   }
                                 }
                                 ?>
                               ?>
                               </select>
-                            <?php
-                          }
-                          ?>
                           <br>
                           <button class="btn btn-success border-dark" type="submit" name="enviar">Cargar Datos</button>
                         </div>
@@ -412,46 +811,104 @@ include("php/validarSesion.php");
           <div class="row h-100 justify-content-center align-items-center">
             <div class="card col-11 border-black" style="background-color: #F0F2EE;">
               <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-transparent p-3 rounded-2 text-black" tabindex="0">
-                
+                <table class="table table-striped bg-white">
+                  <tr align="center">
+                    <td>
+                      <b>COD_EST</b> 
+                    </td>
+                    <td>
+                      <b>CEDULA</b> 
+                    </td>
+                    <td>
+                      <b>NOMBRES</b> 
+                    </td>
+                    <td>
+                      <b>APELLIDOS</b> 
+                    </td>
+                    <td>
+                      <b>CORREO</b> 
+                    </td>
+                    <td>
+                      <b>TELEFONO</b> 
+                    </td>
+                    <td>
+                      <b>SEMESTRE</b> 
+                    </td>
+                  </tr>
+                  <tbody class="table-group-divider">
+                    <?php
+                    if($inc){
+                      $consulta7 = "SELECT estudiante.CodEstudiante, estudiante.Cedula, estudiante.Semestre, estudiante.CodSNIES, persona.Nombres, persona.Apellidos, persona.Correo, persona.Telefono FROM
+                      estudiante inner join persona on estudiante.Cedula = persona.Cedula ";
+                      $resultado3 = mysqli_query($conexion,$consulta7);
+                      if($resultado3){
+                        while ($roww10 = $resultado3->fetch_array()) {
+                          $codigoestudiante11          = $roww10['CodEstudiante'];
+                          $cedula11 = $roww10['Cedula'];
+                          $semestre11     = $roww10['Semestre'];
+                          $codigosnies11 = $roww10['CodSNIES'];
+                          $nombre11          = $roww10['Nombres'];
+                          $apellido11          = $roww10['Apellidos'];
+                          $correo11 = $roww10['Correo'];
+                          $telefono11          = $roww10['Telefono'];
+                          $codsnies13 = htmlspecialchars($_GET["id"]);
+                          if($codigosnies11 == $codsnies13){
+                            if($cedula11){
+                            ?>
+                            <tr align="center">
+                              <td>
+                                <?php echo $codigoestudiante11; ?>
+                              </td>
+                              <td>
+                                <?php echo $cedula11; ?>
+                              </td>
+
+                              <td>
+                                <?php echo $nombre11; ?>
+                              </td>
+                              <td>
+                                <?php echo $apellido11; ?>
+                              </td>
+                              <td>
+                                <?php echo $correo11; ?>
+                              </td>
+                              <td>
+                                <?php echo $telefono11; ?>
+                              </td>
+                              <td>
+                                <?php echo $semestre11; ?>
+                              </td>
+                            </tr>
+                            <?php
+                          }
+                          }
+                        }
+                      }
+                    }
+                    ?> 
+                  </table>
                   <div class="container" align="center" style="width: 45rem;">
                     <form class="row g-3" name="egresar estudiante" method="POST" action="perfilegresarestudiante.php" >
                       <table class="table table-striped" align="center">
                         <td align="center">
                          <div class="col-md-6">
                           <label for="coddd" class="form-label"><b>CODIGO</b></label>
-                          
-                          <?php
-                          $consulta_pre = "SELECT Cedula FROM presidente WHERE Cedula = '$_SESSION[cedula]' ";
-                          $consulta_pre = mysqli_query($conexion, $consulta_pre);
-                          $consulta_pre = mysqli_fetch_array($consulta_pre);
-
-                          if($consulta_pre){
-                            ?>
-                            <input type="number" name="codigo" placeholder="Codigo" class="form-control" id="validationDefault01" required>
-                            <?php
-                          }else{
-                            ?>
-                            <select class="form-select" aria-label="Default select example" name="codigo">
+                          <select class="form-select" aria-label="Default select example" name="codigo">
                               <?php
-                              $consulta_codigosnies = "SELECT CodSNIES FROM programa ";
+                              $consulta_codigosnies = "SELECT CodEstudiante, CodSNIES FROM estudiante ";
                               $consulta_codigosnies = mysqli_query($conexion, $consulta_codigosnies);
 
                               while($mostrar_codigosnies=mysqli_fetch_array($consulta_codigosnies))
                                 {
-                                  $consulta_codigosniesestu = "SELECT CodEstudiante, CodSNIES FROM estudiante WHERE CodSNIES = '$_SESSION[codigosnies]' ";
-                                  $consulta_codigosniesestu = mysqli_query($conexion, $consulta_codigosniesestu);
-                                  $consulta_codigosniesestu = mysqli_fetch_array($consulta_codigosniesestu);
-                                  if($mostrar_codigosnies['CodSNIES'] == $consulta_codigosniesestu['CodSNIES']){
+                                  if($mostrar_codigosnies['CodSNIES'] == htmlspecialchars($_GET["id"])){
                                     ?>
-                                      <option  value="<?php echo $consulta_codigosniesestu['CodEstudiante'] ?>"><?php echo $consulta_codigosniesestu['CodEstudiante'] ?></option>
+                                      <option  value="<?php echo $mostrar_codigosnies['CodEstudiante'] ?>"><?php echo $mostrar_codigosnies['CodEstudiante'] ?></option>
                                     <?php
                                   }
                                 }
                                 ?>
+                              ?>
                               </select>
-                            <?php
-                          }
-                          ?>
                           <br>
                           <button class="btn btn-success border-dark" type="submit" name="enviar">Cargar Datos</button>
                         </div>
@@ -468,46 +925,105 @@ include("php/validarSesion.php");
           <div class="row h-100 justify-content-center align-items-center">
             <div class="card col-11 border-black" style="background-color: #F0F2EE;">
               <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-transparent p-3 rounded-2 text-black" tabindex="0">
-               
+                <table class="table table-striped bg-white">
+                  <tr align="center">
+                    <td>
+                      <b>COD_EST</b> 
+                    </td>
+                    <td>
+                      <b>CEDULA</b> 
+                    </td>
+                    <td>
+                      <b>NOMBRES</b> 
+                    </td>
+                    <td>
+                      <b>APELLIDOS</b> 
+                    </td>
+                    <td>
+                      <b>CORREO</b> 
+                    </td>
+                    <td>
+                      <b>TELEFONO</b> 
+                    </td>
+                    <td>
+                      <b>SEMESTRE</b> 
+                    </td>
+                  </tr>
+                  <tbody class="table-group-divider">
+                    <?php
+                    if($inc){
+                      $consulta7 = "SELECT estudiante.CodEstudiante, estudiante.Cedula, estudiante.Semestre, estudiante.CodSNIES, persona.Nombres, persona.Apellidos, persona.Correo, persona.Telefono FROM
+                      estudiante inner join persona on estudiante.Cedula = persona.Cedula ";
+                      $resultado3 = mysqli_query($conexion,$consulta7);
+                      if($resultado3){
+                        while ($roww10 = $resultado3->fetch_array()) {
+                          $codigoestudiante11          = $roww10['CodEstudiante'];
+                          $cedula11 = $roww10['Cedula'];
+                          $semestre11     = $roww10['Semestre'];
+                          $codigosnies11 = $roww10['CodSNIES'];
+                          $nombre11          = $roww10['Nombres'];
+                          $apellido11          = $roww10['Apellidos'];
+                          $correo11 = $roww10['Correo'];
+                          $telefono11          = $roww10['Telefono'];
+                          $codsnies13 = htmlspecialchars($_GET["id"]);
+                          if($codigosnies11 == $codsnies13){
+                            if($cedula11){
+                            ?>
+                            <tr align="center">
+                              <td>
+                                <?php echo $codigoestudiante11; ?>
+                              </td>
+                              <td>
+                                <?php echo $cedula11; ?>
+                              </td>
+
+                              <td>
+                                <?php echo $nombre11; ?>
+                              </td>
+                              <td>
+                                <?php echo $apellido11; ?>
+                              </td>
+                              <td>
+                                <?php echo $correo11; ?>
+                              </td>
+                              <td>
+                                <?php echo $telefono11; ?>
+                              </td>
+                              <td>
+                                <?php echo $semestre11; ?>
+                              </td>
+                            </tr>
+                            <?php
+                          }
+                          }
+                        }
+                      }
+                    }
+                    ?>
+                  </table>
                   <div class="container" align="center" style="width: 45rem;">
                     <form class="row g-3" name="titular estudiante" method="POST" action="perfiltitularestudiante.php" >
                       <table class="table table-striped" align="center">
                         <td align="center">
                          <div class="col-md-6">
                           <label for="coddd" class="form-label"><b>CODIGO</b></label>
-                          
-                          <?php
-                          $consulta_pre = "SELECT Cedula FROM presidente WHERE Cedula = '$_SESSION[cedula]' ";
-                          $consulta_pre = mysqli_query($conexion, $consulta_pre);
-                          $consulta_pre = mysqli_fetch_array($consulta_pre);
-
-                          if($consulta_pre){
-                            ?>
-                            <input type="number" name="codigo" placeholder="Codigo" class="form-control" id="validationDefault01" required>
-                            <?php
-                          }else{
-                            ?>
-                            <select class="form-select" aria-label="Default select example" name="codigo">
+                          <select class="form-select" aria-label="Default select example" name="codigo">
                               <?php
-                              $consulta_codigosnies = "SELECT CodSNIES FROM programa ";
+                              $consulta_codigosnies = "SELECT CodEstudiante, CodSNIES FROM estudiante ";
                               $consulta_codigosnies = mysqli_query($conexion, $consulta_codigosnies);
 
                               while($mostrar_codigosnies=mysqli_fetch_array($consulta_codigosnies))
                                 {
-                                  $consulta_codigosniesestu = "SELECT CodEstudiante, CodSNIES FROM estudiante WHERE CodSNIES = '$_SESSION[codigosnies]' ";
-                                  $consulta_codigosniesestu = mysqli_query($conexion, $consulta_codigosniesestu);
-                                  $consulta_codigosniesestu = mysqli_fetch_array($consulta_codigosniesestu);
-                                  if($mostrar_codigosnies['CodSNIES'] == $consulta_codigosniesestu['CodSNIES']){
+                                  if($mostrar_codigosnies['CodSNIES'] == htmlspecialchars($_GET["id"])){
                                     ?>
-                                      <option  value="<?php echo $consulta_codigosniesestu['CodEstudiante'] ?>"><?php echo $consulta_codigosniesestu['CodEstudiante'] ?></option>
+                                      <option value="<?php echo $mostrar_codigosnies['CodEstudiante'] ?>"><?php echo $mostrar_codigosnies['CodEstudiante'] ?></option>
                                     <?php
                                   }
                                 }
                                 ?>
+                              ?>
                               </select>
-                            <?php
-                          }
-                          ?>
+                          
                           <br>
                           <button class="btn btn-success border-dark" type="submit" name="enviar">Cargar Datos</button>
                         </div>
@@ -676,29 +1192,8 @@ include("php/validarSesion.php");
                             </td>
                             <td>
                               <select class="form-select" aria-label="Default select example" name="codigosnies">
-                                <?php
-                                 
-                                $consultapre = "SELECT Cedula FROM presidente WHERE Cedula = '$_SESSION[cedula]' ";
-                                $consultapre = mysqli_query($conexion, $consultapre);
-                                $consultapre = mysqli_fetch_array($consultapre);
-
-                                if($consultapre){
-                                  $sql_maestriasx="SELECT CodSNIES FROM programa";
-                                  $consulta_maestriasx=mysqli_query($conexion,$sql_maestriasx);
-                                  while($mostrar_maestriasx=mysqli_fetch_array($consulta_maestriasx)){
-                                    ?>
-                                    <option  value="<?php echo $mostrar_maestriasx['CodSNIES'] ?>"><?php echo $mostrar_maestriasx['CodSNIES'] ?></option>
-                                    <?php
-                                  }
-                                  ?> 
-                                  <?php
-                                }else{
-                                  ?> 
-                                  <option  value="<?php echo htmlspecialchars($_GET["id"]) ; ?>"><?php echo htmlspecialchars($_GET["id"]) ; ?></option>
-                                  <?php
-                                }
-                                ?>
-                                </select>
+                                <option  value="<?php echo htmlspecialchars($_GET["id"]) ; ?>"><?php echo htmlspecialchars($_GET["id"]) ; ?></option> -->
+                                                                </select>
                             </td>
                           </tr>
                           <tr align="center" valign="middle">
@@ -744,8 +1239,134 @@ include("php/validarSesion.php");
         <div class="row h-100 justify-content-center align-items-center">
           <div class="card col-10 border-black" style="background-color: #F0F2EE;">
             <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-transparent p-3 rounded-2 text-black" tabindex="0">
-              
-             
+              <h4 id="scrollspyHeading12" align="center"><b><i>VISUALIZAR DOCENTES</i></b></h4>
+              <p> 
+                <table class="table table-striped">
+                  <tr align="center">
+                    <td>
+                      <b>COD_DOC</b> 
+                    </td>
+                    <td>
+                      <b>CEDULA</b>
+                    </td>
+                    <td>
+                      <b>FORMACION</b>
+                    </td>
+                    <td>
+                      <b>NOMBRES</b>
+                    </td>
+                    <td>
+                      <b>APELLIDOS</b>
+                    </td>
+                    <td>
+                      <b>CORREO</b>
+                    </td>
+                    <td>
+                      <b>TELEFONO</b>
+                    </td>
+                    <td>
+                      <b>DIRECCION</b>
+                    </td>
+                    <td>
+                      <b>CIUDAD</b>
+                    </td>
+                    <td>
+                      <b>GENERO</b>
+                    </td>
+                    <td>
+                      <b>FECHA N</b>
+                    </td>
+                    <td>
+                      <b>ESTADO CIVIL</b>
+                    </td>
+                  </tr>
+                  <tbody class="table-group-divider">
+                    <?php
+                    if($inc){
+                      $consulta2 = "SELECT docente.CodDocente, docente.Cedula, docente.Formacion, persona.Nombres, persona.Apellidos, persona.Correo, persona.Telefono, persona.Direccion, persona.Ciudad, persona.Genero, persona.FechaNacimiento, persona.EstadoCivil FROM
+                      docente inner join persona on docente.Cedula = persona.Cedula ";
+                      $resultado2 = mysqli_query($conexion,$consulta2);
+                      if($resultado2){
+                        while ($row3 = $resultado2->fetch_array()) {
+                          $codigodocente1 = $row3['CodDocente'];
+                          $cedula1 = $row3['Cedula'];
+                          $formacion1 = $row3['Formacion'];
+                          $nombre1 = $row3['Nombres'];
+                          $apellido1 = $row3['Apellidos'];
+                          $correo1 = $row3['Correo'];
+                          $telefono1 = $row3['Telefono'];
+                          $direccion1 = $row3['Direccion'];
+                          $ciudad1 = $row3['Ciudad'];
+                          $genero1 = $row3['Genero'];
+                          $fechanacimiento1 = $row3['FechaNacimiento'];
+                          $estadocivil1 = $row3['EstadoCivil'];
+
+                          if($cedula1){
+                            ?>
+                            
+                                <?php 
+                                $consultam = "SELECT CodDocente, CodSNIES FROM docente_programa ";
+                                $consultamx = mysqli_query($conexion, $consultam);
+
+                                while ($row34 = $consultamx->fetch_array()){
+                                  $codigodoc1 = $row34['CodDocente'];
+                                  $codigosnies1 = $row34['CodSNIES'];
+                                  $codsnies122 = htmlspecialchars($_GET["id"]);
+
+                                  if($codigodoc1 == $codigodocente1 && $codigosnies1 == htmlspecialchars($_GET["id"]) ){
+                                    ?>
+                                    <tr align="center">
+                                      <td>
+                                        <?php echo $codigodocente1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $cedula1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $formacion1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $nombre1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $apellido1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $correo1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $telefono1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $direccion1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $ciudad1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $genero1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $fechanacimiento1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $estadocivil1; ?>
+                                      </td>
+                                    </tr>
+                                    
+                                    <?php
+                                  }
+                                }
+                                ?>
+                            <?php
+                          }else{
+                          }
+                        }
+                      }
+                    }
+                    ?>
+                  </table>
+                </p>
               <h4 id="scrollspyHeading15" align="center"><b><i>CONTACTOS</i></b></h4>
               <p> 
                 <div class="card-group">
@@ -778,45 +1399,120 @@ include("php/validarSesion.php");
       <div class="row h-100 justify-content-center align-items-center">
         <div class="card col-11 border-black" style="background-color: #F0F2EE;">
           <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-transparent p-3 rounded-2 text-black" tabindex="0">
-            
+            <table class="table table-striped bg-white">
+              <tr align="center">
+                <td>
+                  <b>COD_DOC</b> 
+                </td>
+                <td>
+                  <b>CEDULA</b> 
+                </td>
+                <td>
+                  <b>NOMBRES</b> 
+                </td>
+                <td>
+                  <b>APELLIDOS</b> 
+                </td>
+                <td>
+                  <b>CORREO</b> 
+                </td>
+                <td>
+                  <b>TELEFONO</b> 
+                </td>
+                <td>
+                  <b>FORMACION</b> 
+                </td>
+              </tr>
+              <tbody class="table-group-divider">
+                <?php
+                    if($inc){
+                      $consulta2 = "SELECT docente.CodDocente, docente.Cedula, docente.Formacion, persona.Nombres, persona.Apellidos, persona.Correo, persona.Telefono FROM
+                      docente inner join persona on docente.Cedula = persona.Cedula ";
+                      $resultado2 = mysqli_query($conexion,$consulta2);
+                      if($resultado2){
+                        while ($row3 = $resultado2->fetch_array()) {
+                          $codigodocente1 = $row3['CodDocente'];
+                          $cedula1 = $row3['Cedula'];
+                          $formacion1 = $row3['Formacion'];
+                          $nombre1 = $row3['Nombres'];
+                          $apellido1 = $row3['Apellidos'];
+                          $correo1 = $row3['Correo'];
+                          $telefono1 = $row3['Telefono'];
+
+                          
+
+                          if($cedula1){
+                            ?>
+                            
+                                <?php 
+                                $consultam = "SELECT CodDocente, CodSNIES FROM docente_programa ";
+                                $consultamx = mysqli_query($conexion, $consultam);
+
+                                while ($row34 = $consultamx->fetch_array()){
+                                  $codigodoc1 = $row34['CodDocente'];
+                                  $codigosnies1 = $row34['CodSNIES'];
+                                  $codsnies12 = htmlspecialchars($_GET["id"]);
+
+                                  if($codigodoc1 == $codigodocente1 && $codigosnies1 == $codsnies12 ){
+                                    ?>
+                                    <tr align="center">
+                                      <td>
+                                        <?php echo $codigodocente1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $cedula1; ?>
+                                      </td>
+                                      
+                                      <td>
+                                        <?php echo $nombre1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $apellido1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $correo1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $telefono1; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $formacion1; ?>
+                                      </td>
+                                    </tr>
+                                    
+                                    <?php
+                                  }
+                                }
+                                ?>
+                            <?php
+                          }else{
+                          }
+                        }
+                      }
+                    }
+                    ?>
+              </table>
               <div class="container" align="center" style="width: 45rem;">
               <form class="row g-3" name="modificar docente" method="POST" action="perfilmodificardocente.php" >
                       <table class="table table-striped" align="center">
                         <td align="center">
                          <div class="col-md-6">
                           <label for="coddd" class="form-label"><b>CODIGO</b></label>
-                          <?php
-                          $consulta_pre = "SELECT Cedula FROM presidente WHERE Cedula = '$_SESSION[cedula]' ";
-                          $consulta_pre = mysqli_query($conexion, $consulta_pre);
-                          $consulta_pre = mysqli_fetch_array($consulta_pre);
-
-                          if($consulta_pre){
-                            ?>
-                            <input type="number" name="codigo" placeholder="Codigo" class="form-control" id="validationDefault01" required>
-                            <?php
-                          }else{
-                            ?>
-                            <select class="form-select" aria-label="Default select example" name="codigo">
+                          <select class="form-select" aria-label="Default select example" name="codigo">
                               <?php
-                              $consulta_codigosnies = "SELECT CodSNIES FROM programa ";
+                              $consulta_codigosnies = "SELECT CodDocente, CodSNIES FROM docente_programa ";
                               $consulta_codigosnies = mysqli_query($conexion, $consulta_codigosnies);
 
                               while($mostrar_codigosnies=mysqli_fetch_array($consulta_codigosnies))
                                 {
-                                  $consulta_codigosniesestu = "SELECT CodDocente, CodSNIES FROM docente_programa WHERE CodSNIES = '$_SESSION[codigosnies]' ";
-                                  $consulta_codigosniesestu = mysqli_query($conexion, $consulta_codigosniesestu);
-                                  $consulta_codigosniesestu = mysqli_fetch_array($consulta_codigosniesestu);
-                                  if($mostrar_codigosnies['CodSNIES'] == $consulta_codigosniesestu['CodSNIES']){
+                                  if($mostrar_codigosnies['CodSNIES'] == htmlspecialchars($_GET["id"])){
                                     ?>
-                                      <option  value="<?php echo $consulta_codigosniesestu['CodDocente'] ?>"><?php echo $consulta_codigosniesestu['CodDocente'] ?></option>
+                                      <option  value="<?php echo $mostrar_codigosnies['CodDocente'] ?>"><?php echo $mostrar_codigosnies['CodDocente'] ?></option>
                                     <?php
                                   }
                                 }
                                 ?>
                               </select>
-                            <?php
-                          }
-                          ?>
                           <br>
                           <button class="btn btn-success border-dark" type="submit" name="enviar">Cargar Datos</button>
                         </div>
@@ -866,40 +1562,15 @@ include("php/validarSesion.php");
                               Codigo SNIES:
                             </td>
                             <td>
-                              
+
                               <?php
-                              $consulta_pre = "SELECT Cedula FROM presidente WHERE Cedula = '$_SESSION[cedula]' ";
-                              $consulta_pre = mysqli_query($conexion, $consulta_pre);
-                              $consulta_pre = mysqli_fetch_array($consulta_pre);
-
-                              if($consulta_pre){
-                                ?>
-                                <input type="number" name="codigosnies" placeholder="CodigoSnies" class="form-control" id="validationDefault01" required>
-                                <?php
-                              }else{
-                                ?>
-                                <select class="form-select" aria-label="Default select example" name="codigosnies">
-                              <?php
-
-                              $consulta_codigosnies = "SELECT CodSNIES FROM programa ";
-                              $consulta_codigosnies = mysqli_query($conexion, $consulta_codigosnies);
-
-                              while($mostrar_codigosnies=mysqli_fetch_array($consulta_codigosnies))
-                                {
-                                  $consulta_codigosniesestu = "SELECT CodCohorte, CodSNIES FROM cohorte WHERE CodSNIES = '$_SESSION[codigosnies]' ";
-                                  $consulta_codigosniesestu = mysqli_query($conexion, $consulta_codigosniesestu);
-                                  $consulta_codigosniesestu = mysqli_fetch_array($consulta_codigosniesestu);
-                                  if($mostrar_codigosnies['CodSNIES'] == $consulta_codigosniesestu['CodSNIES']){
-                                    ?>
-                                      <option  value="<?php echo $consulta_codigosniesestu['CodSNIES'] ?>"><?php echo $consulta_codigosniesestu['CodSNIES'] ?></option>
-                                    <?php
-                                  }
-                                }
-                                ?>
-                              </select>
-                                <?php
-                              }
+                               //$codsnies12 = echo .htmlspecialchars($_GET["id"]);
+                               // . htmlspecialchars($_GET["id"])
                               ?>
+
+                              <input type="number" name="codigosnies" placeholder="CodigoSnies" class="form-control" id="validationDefault01" value="<?php echo htmlspecialchars($_GET["id"]); ?>" readonly required>
+                              
+                              
                             </td>
                             <td>
                               Nombre:
@@ -965,7 +1636,146 @@ include("php/validarSesion.php");
         <div class="row h-100 justify-content-center align-items-center">
           <div class="card col-10 border-black" style="background-color: #F0F2EE;">
             <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-transparent p-3 rounded-2 text-black" tabindex="0">
-              
+              <h4 id="scrollspyHeading12" align="center"><b><i>VISUALIZAR</i></b></h4>
+              <p> 
+                <table class="table table-striped">
+                  <tr align="center">
+                    <td>
+                      <b>CODIGO</b> 
+                    </td>
+                    <td>
+                      <b>NOMBRE</b>
+                    </td>
+                    <td>
+                      <b>FECHA INICIO</b>
+                    </td>
+                    <td>
+                      <b>FECHA FIN</b>
+                    </td>
+                    <td>
+                      <b>NUMERO ESTUDIANTES</b>
+                    </td>
+                  </tr>
+                  <tbody class="table-group-divider">
+                    <?php
+                    if($inc){
+                      $consulta2 = "SELECT CodCohorte, CodSNIES, Nombre, FechaInicio, FechaFinalizacion, NumEstudiantes FROM
+                      cohorte ";
+                      $resultado2 = mysqli_query($conexion,$consulta2);
+                      if($resultado2){
+                        while ($row3 = $resultado2->fetch_array()) {
+                          $codigocohorte1 = $row3['CodCohorte'];
+                          $codigosnies1 = $row3['CodSNIES'];
+                          $nombre1 = $row3['Nombre'];
+                          $fechainicio1 = $row3['FechaInicio'];
+                          $fechafinalizacion1 = $row3['FechaFinalizacion'];
+                          $numeroestudiantes1 = $row3['NumEstudiantes'];
+                          $codsnies133 = htmlspecialchars($_GET["id"]);
+                          if($codigosnies1 == $codsnies133){
+                            if($codigocohorte1){
+                              ?>
+                              <tr align="center">
+                                <td>
+                                  <?php echo $codigocohorte1; ?>
+                                </td>
+                                <td>
+                                  <?php echo $nombre1; ?>
+                                </td>
+                                <td>
+                                  <?php echo $fechainicio1; ?>
+                                </td>
+                                <td>
+                                  <?php echo $fechafinalizacion1; ?>
+                                </td>
+                                <td>
+                                  <?php echo $numeroestudiantes1; ?>
+                                </td>
+                              </tr>
+                              <?php
+                            }
+                          }
+                        }
+                      }
+                    }
+                    ?>
+                  </table>
+                </p>
+                <br><br>
+                <h4 id="scrollspyHeading2" align="center"><b><i>LISTADO DE ESTUDIANTES EGRESADOS DE LA COHORTE</i></b></h4>
+                <p> 
+                  <table class="table table-striped bg-white">
+                    <tr align="center">
+                      <td>
+                        <b>COD_EST</b> 
+                      </td>
+                      <td>
+                        <b>CEDULA</b> 
+                      </td>
+                      <td>
+                        <b>NOMBRES</b> 
+                      </td>
+                      <td>
+                        <b>APELLIDOS</b> 
+                      </td>
+                      <td>
+                        <b>COHORTE</b> 
+                      </td>
+                    </tr>
+                    <tbody class="table-group-divider">
+                      <?php
+                      if($inc){
+                        $consulta = "SELECT persona.Nombres, persona.Apellidos, estudiante.CodEstudiante, estudiante.Cedula, estudiante.CodCohorte, estudiante.Semestre, cohorte.CodSNIES FROM persona inner join estudiante on persona.Cedula = estudiante.Cedula inner join cohorte on estudiante.CodCohorte = cohorte.CodCohorte ";
+                        $resultado = mysqli_query($conexion,$consulta);
+                        if($resultado){
+                          while ($row2 = $resultado->fetch_array()) {
+                            $nombre = $row2['Nombres'];
+                            $apellido = $row2['Apellidos'];
+                            $codigoestudiante = $row2['CodEstudiante'];
+                            $cedula = $row2['Cedula'];
+                            $codigocohorte = $row2['CodCohorte'];
+                            $semestre = $row2['Semestre'];
+                            $codigosnies = $row2['CodSNIES'];
+                            
+                            $codsnies12 = htmlspecialchars($_GET["id"]);
+
+                            if($codigosnies == $codsnies12){
+                              //$cosxx = "SELECT CodCohorte FROM cohorte";
+                              //$cosxx = mysqli_query($conexion,$cosxx);
+                              //$mostrar_coxx=mysqli_fetch_array($cosxx);
+
+                             // if($cosxx){
+                                
+                                if($cedula){
+                                  ?>
+                                  <tr align="center">
+                                    <td>
+                                      <?php echo $codigoestudiante; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $cedula; ?>
+                                    </td>
+
+                                    <td>
+                                      <?php echo $nombre; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $apellido; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $codigocohorte; ?>
+                                    </td>
+                                  </tr>
+                                  <?php
+                                }
+                              //}
+                              
+                            }
+                          }
+                        }
+                      }
+                      ?>
+                    </table>
+                  </p>
               <h4 id="scrollspyHeading15" align="center"><b><i>CONTACTOS</i></b></h4>
               <p> 
                 <div class="card-group">
@@ -998,49 +1808,90 @@ include("php/validarSesion.php");
       <div class="row h-100 justify-content-center align-items-center">
         <div class="card col-11 border-black" style="background-color: #F0F2EE;">
           <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-transparent p-3 rounded-2 text-black" tabindex="0">
-            
-            
+            <h4 id="scrollspyHeading12" align="center"><b><i>MODIFICAR</i></b></h4>
+            <table class="table table-striped bg-white">
+              <tr align="center">
+                <td>
+                      <b>CODIGO</b> 
+                    </td>
+                    <td>
+                      <b>NOMBRE</b>
+                    </td>
+                    <td>
+                      <b>FECHA INICIO</b>
+                    </td>
+                    <td>
+                      <b>FECHA FIN</b>
+                    </td>
+                    <td>
+                      <b>NUMERO ESTUDIANTES</b>
+                    </td>
+              </tr>
+              <tbody class="table-group-divider">
+                <?php
+                if($inc){
+                  $consulta7 = "SELECT CodCohorte, CodSNIES, Nombre, FechaInicio, FechaFinalizacion, NumEstudiantes FROM
+                      cohorte ";
+                  $resultado3 = mysqli_query($conexion,$consulta7);
+                  if($resultado3){
+                    while ($roww10 = $resultado3->fetch_array()) {
+                      $codigocohorte11  = $roww10['CodCohorte'];
+                      $codigosnies11 = $roww10['CodSNIES'];
+                      $nombre11 = $roww10['Nombre'];
+                      $fechainicio11 = $roww10['FechaInicio'];
+                      $fechafinalizacion11 = $roww10['FechaFinalizacion'];
+                      $numeroestudiantes11 = $roww10['NumEstudiantes'];
+                      $codsnies134 = htmlspecialchars($_GET["id"]);
+                      if($codigosnies11 == $codsnies134){
+                        if($codigocohorte11){
+                          ?>
+                          <tr align="center">
+                            <td>
+                              <?php echo $codigocohorte11; ?>
+                            </td>
+                            <td>
+                              <?php echo $nombre11; ?>
+                            </td>
+
+                            <td>
+                              <?php echo $fechainicio11; ?>
+                            </td>
+                            <td>
+                              <?php echo $fechafinalizacion11; ?>
+                            </td>
+                            <td>
+                              <?php echo $numeroestudiantes11; ?>
+                            </td>
+                          </tr>
+                          <?php
+                        }
+                      }
+                    }
+                  }
+                }
+                ?>
+              </table>
               <div class="container" align="center" style="width: 45rem;">
                 <form class="row g-3" name="modificar docente" method="POST" action="perfilmodificarcohorte.php" >
                   <table class="table table-striped" align="center">
                     <td align="center">
                      <div class="col-md-6">
                       <label for="coddd" class="form-label"><b>CODIGO</b></label>
-                       <?php
-                              $consulta_pre = "SELECT Cedula FROM presidente WHERE Cedula = '$_SESSION[cedula]' ";
-                              $consulta_pre = mysqli_query($conexion, $consulta_pre);
-                              $consulta_pre = mysqli_fetch_array($consulta_pre);
-
-                              if($consulta_pre){
-
-                                ?>
-                                <input type="text" name="codigo" placeholder="Ingrese codigo cohorte" class="form-control" id="coddd" required>
-                                <?php
-
-                              }else{
-                                ?>
-                                <select class="form-select" aria-label="Default select example" name="codigo">
+                       <select class="form-select" aria-label="Default select example" name="codigo">
                               <?php
-                              $consulta_codigosnies = "SELECT CodSNIES FROM programa ";
+                              $consulta_codigosnies = "SELECT CodCohorte, CodSNIES FROM cohorte ";
                               $consulta_codigosnies = mysqli_query($conexion, $consulta_codigosnies);
 
                               while($mostrar_codigosnies=mysqli_fetch_array($consulta_codigosnies))
                                 {
-                                  $consulta_codigosniesestu = "SELECT CodCohorte, CodSNIES FROM cohorte WHERE CodSNIES = '$_SESSION[codigosnies]' ";
-                                  $consulta_codigosniesestu = mysqli_query($conexion, $consulta_codigosniesestu);
-                                  $consulta_codigosniesestu = mysqli_fetch_array($consulta_codigosniesestu);
-                                  if($mostrar_codigosnies['CodSNIES'] == $consulta_codigosniesestu['CodSNIES']){
+                                  if($mostrar_codigosnies['CodSNIES'] == htmlspecialchars($_GET["id"])){
                                     ?>
-                                      <option  value="<?php echo $consulta_codigosniesestu['CodCohorte'] ?>"><?php echo $consulta_codigosniesestu['CodCohorte'] ?></option>
+                                      <option  value="<?php echo $mostrar_codigosnies['CodCohorte'] ?>"><?php echo $mostrar_codigosnies['CodCohorte'] ?></option>
                                     <?php
                                   }
                                 }
                                 ?>
                               </select>
-                                <?php
-                              }
-
-                              ?>
                       <br>
                       <button class="btn btn-success border-dark" type="submit" name="enviar">Cargar Datos</button>
                     </div>

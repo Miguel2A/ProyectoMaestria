@@ -128,15 +128,20 @@ include("php/validarSesion.php");
 
                               <?php
 
-                              $consulta_codigocohorte = "SELECT CodCohorte FROM cohorte ";
+                              $consulta_codigocohorte = "SELECT CodCohorte, CodSNIES FROM cohorte ";
                               $consulta_codigocohorte = mysqli_query($conexion, $consulta_codigocohorte);
 
                               while($mostrar_codigocohorte=mysqli_fetch_array($consulta_codigocohorte))
                                 {
+                                  if($mostrar_codigocohorte['CodSNIES'] == $codigosnies ){
+                                    ?>
+                                    <option  value="<?php echo $mostrar_codigocohorte['CodCohorte'] ?>"><?php echo $mostrar_codigocohorte['CodCohorte'] ?></option>
+                                    <?php
+                                  }
                                   ?>
                                     
                                       
-                                      <option  value="<?php echo $mostrar_codigocohorte['CodCohorte'] ?>"><?php echo $mostrar_codigocohorte['CodCohorte'] ?></option>
+                                      
                                     
                                   <?php
                                 }

@@ -115,7 +115,96 @@ include("php/validarSesion.php");
                               $fechanacimiento = $row1['FechaNacimiento'];
                               $estadocivil     = $row1['EstadoCivil'];
                               ?>
-                              
+                              <table class="table table-striped">
+                                <tr align="center">
+                                  <td>
+                                    <b>CEDULA</b> 
+                                  </td>
+                                  <td>
+                                    <?php echo $cedula; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>NOMBRES</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $nombres; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>APELLIDOS</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $apellidos; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>CORREO</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $correo; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>TELEFONO</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $telefono; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>DIRECCIÓN</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $direccion; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>CIUDAD</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $ciudad; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>GENERO</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $genero; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>FECHA DE NACIMIENTO</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $fechanacimiento; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>ESTADO CIVIL</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $estadocivil; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>FORMACION</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $formacion; ?>
+                                  </td>
+                                </tr>
+                              </table>
                               <?php
                             }
                           }
@@ -301,7 +390,21 @@ include("php/validarSesion.php");
                             <td align="center">
                               <div class="col-md-6">
                                 <label for="coddd" class="form-label"><b>MODIFICACION</b></label>
-                                <input type="text" name="codigosnies" placeholder="Ingrese codigo SNIES" class="form-control" id="coddd" required>
+                                 
+                                  <select class="form-select" aria-label="Default select example" name="codigosnies">
+                                    <?php
+                                    $consulta_codigosnies = "SELECT CodSNIES, NomPrograma FROM programa ";
+                                    $consulta_codigosnies = mysqli_query($conexion, $consulta_codigosnies);
+
+                                    while($mostrar_codigosnies=mysqli_fetch_array($consulta_codigosnies))
+                                      {
+                                          ?>
+                                            <option  value="<?php echo $mostrar_codigosnies['CodSNIES'] ?>"><?php echo $mostrar_codigosnies['NomPrograma'] ?></option>
+                                          <?php
+                                      }
+                                      ?>
+                                    ?>
+                                  </select>
                                 <br>
                                 <button class="btn btn-success border-dark" type="submit" name="enviar">Cargar Datos</button>
                               </div>
@@ -550,7 +653,83 @@ include("php/validarSesion.php");
                         </table>
                       </form>
                       <p> 
-                      
+                      <table class="table table-striped">
+                        <tr align="center">
+                          <th colspan="7">
+                            VISUALIZAR
+                          </th>
+                        </tr>
+                        <tr align="center">
+                          <td>
+                            <b>CEDULA</b> 
+                          </td>
+                          <td>
+                            <b>COD_SNIES</b>
+                          </td>
+                          <td>
+                            <b>NOMBRES</b>
+                          </td>
+                          <td>
+                            <b>APELLIDOS</b>
+                          </td>
+                          <td>
+                            <b>CORREO</b>
+                          </td>
+                          <td>
+                            <b>TELEFONO</b>
+                          </td>
+                          <td>
+                            <b>FECHA_VINCULACION</b>
+                          </td>
+                        </tr>
+                        <tbody class="table-group-divider">
+                          <?php
+                          if($inc){
+                            $consulta22 = "SELECT coordinador.Cedula, coordinador.CodSNIES, coordinador.FechaVinculacion, persona.Nombres, persona.Apellidos, persona.Correo, persona.Telefono FROM
+                            coordinador inner join persona on coordinador.Cedula = persona.Cedula ";
+                            $resultado22 = mysqli_query($conexion,$consulta22);
+                            if($resultado22){
+                              while ($row33 = $resultado22->fetch_array()) {
+                                $cedula102 = $row33['Cedula'];
+                                $codigosnies102 = $row33['CodSNIES'];
+                                $fechavinculacion102 = $row33['FechaVinculacion'];
+                                $nombre102 = $row33['Nombres'];
+                                $apellido102 = $row33['Apellidos'];
+                                $correo102 = $row33['Correo'];
+                                $telefono102 = $row33['Telefono'];
+                                if($cedula102){
+                                  ?>
+                                  <tr align="center">
+                                    <td>
+                                      <?php echo $cedula102; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $codigosnies102; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $nombre102; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $apellido102; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $correo102; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $telefono102; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $fechavinculacion102; ?>
+                                    </td>
+                                  </tr>
+                                  <?php
+                                }else{
+                                }
+                              }
+                            }
+                          }
+                          ?>
+                        </table>
                       </p>
                       <div class="container" align="center" style="width: 45rem;">
                         <form class="row g-3" name="modificar coordinador" method="POST" action="perfilmodificarcoordinador.php" >
@@ -718,7 +897,83 @@ include("php/validarSesion.php");
                         </table>
                       </form>
                       <p> 
-                      
+                      <table class="table table-striped">
+                        <tr align="center">
+                          <th colspan="7">
+                            VISUALIZAR
+                          </th>
+                        </tr>
+                        <tr align="center">
+                          <td>
+                            <b>CEDULA</b>
+                          </td>
+                          <td>
+                            <b>CODIGO SNIES</b>
+                          </td>
+                          <td>
+                            <b>NOMBRES</b>
+                          </td>
+                          <td>
+                            <b>APELLIDOS</b>
+                          </td>
+                          <td>
+                            <b>CORREO</b>
+                          </td>
+                          <td>
+                            <b>TELEFONO</b>
+                          </td>
+                          <td>
+                            <b>FECHA VINCULACION</b>
+                          </td>
+                        </tr>
+                        <tbody class="table-group-divider">
+                          <?php
+                          if($inc){
+                            $consulta2 = "SELECT asistente.Cedula, asistente.CodSNIES, persona.Nombres, persona.Apellidos, persona.Correo, persona.Telefono, asistente.FechaVinculacion FROM
+                            asistente inner join persona on asistente.Cedula = persona.Cedula ";
+                            $resultado2 = mysqli_query($conexion,$consulta2);
+                            if($resultado2){
+                              while ($row30 = $resultado2->fetch_array()) {
+                                $cedula101 = $row30['Cedula'];
+                                $codsnies101 = $row30['CodSNIES'];
+                                $nombre101 = $row30['Nombres'];
+                                $apellido101 = $row30['Apellidos'];
+                                $correo101 = $row30['Correo'];
+                                $telefono101 = $row30['Telefono'];
+                                $fechavinculacion101 = $row30['FechaVinculacion'];
+                                if($cedula101){
+                                  ?>
+                                  <tr align="center">
+                                    <td>
+                                      <?php echo $cedula101; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $codsnies101; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $nombre101; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $apellido101; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $correo101; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $telefono101; ?>
+                                    </td>
+                                    <td>
+                                      <?php echo $fechavinculacion101; ?>
+                                    </td>
+                                  </tr>
+                                  <?php
+                                }else{
+                                }
+                              }
+                            }
+                          }
+                          ?>
+                        </table>
                       </p>
                       <div class="container" align="center" style="width: 45rem;">
                         <form class="row g-3" name="modificar asistente" method="POST" action="perfilmodificarasistentepre.php" >

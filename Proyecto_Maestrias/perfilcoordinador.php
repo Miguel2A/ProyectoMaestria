@@ -113,7 +113,112 @@ include("php/validarSesion.php");
                               $fechanacimiento = $row1['FechaNacimiento'];
                               $estadocivil     = $row1['EstadoCivil'];
                               ?>
-                              
+                              <table class="table table-striped">
+                                <tr align="center">
+                                  <td>
+                                    <b>CEDULA</b> 
+                                  </td>
+                                  <td>
+                                    <?php echo $cedula; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>NOMBRES</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $nombres; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>APELLIDOS</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $apellidos; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>CORREO</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $correo; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>TELEFONO</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $telefono; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>DIRECCIÓN</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $direccion; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>CIUDAD</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $ciudad; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>GENERO</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $genero; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>FECHA DE NACIMIENTO</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $fechanacimiento; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>ESTADO CIVIL</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $estadocivil; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>CODIGO SNIES</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $codigosnies; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>FECHA VINCULACION</b>
+                                  </td>
+                                  <td>
+                                    <?php echo $fechavinculacion; ?>
+                                  </td>
+                                </tr>
+                                <tr align="center">
+                                  <td>
+                                    <b>ACUERDO NOMBRAMIENTO </b>
+                                  </td>
+                                  <td>
+                                    <?php echo $acunombramiento; ?>
+                                  </td>
+                                </tr>
+                              </table>
                               <?php
                             }
                           }
@@ -575,6 +680,88 @@ include("php/validarSesion.php");
                         </table>
                       </form>
                       <p> 
+                        
+                          <table class="table table-striped">
+                        <tr align="center">
+                          <th colspan="7">
+                            VISUALIZAR
+                          </th>
+                        </tr>
+                        <tr align="center">
+                          <td>
+                            <b>CEDULA</b>
+                          </td>
+                          <td>
+                            <b>CODIGO SNIES</b>
+                          </td>
+                          <td>
+                            <b>NOMBRES</b>
+                          </td>
+                          <td>
+                            <b>APELLIDOS</b>
+                          </td>
+                          <td>
+                            <b>CORREO</b>
+                          </td>
+                          <td>
+                            <b>TELEFONO</b>
+                          </td>
+                          <td>
+                            <b>FECHA VINCULACION</b>
+                          </td>
+                        </tr>
+                        <tbody class="table-group-divider">
+                          <?php
+                          if($inc){
+                            $consulta2 = "SELECT asistente.Cedula, asistente.CodSNIES, persona.Nombres, persona.Apellidos, persona.Correo, persona.Telefono, asistente.FechaVinculacion FROM
+                            asistente inner join persona on asistente.Cedula = persona.Cedula ";
+                            $resultado2 = mysqli_query($conexion,$consulta2);
+                            if($resultado2){
+                              while ($row30 = $resultado2->fetch_array()) {
+                                $cedula101 = $row30['Cedula'];
+                                $codsnies101 = $row30['CodSNIES'];
+                                $nombre101 = $row30['Nombres'];
+                                $apellido101 = $row30['Apellidos'];
+                                $correo101 = $row30['Correo'];
+                                $telefono101 = $row30['Telefono'];
+                                $fechavinculacion101 = $row30['FechaVinculacion'];
+                                if($codsnies101 == $_SESSION['codigosnies']){
+                                  if($cedula101){
+                                    ?>
+                                    <tr align="center">
+                                      <td>
+                                        <?php echo $cedula101; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $codsnies101; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $nombre101; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $apellido101; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $correo101; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $telefono101; ?>
+                                      </td>
+                                      <td>
+                                        <?php echo $fechavinculacion101; ?>
+                                      </td>
+                                    </tr>
+                                    <?php
+                                  }
+                                }
+                                
+                              }
+                            }
+                          }
+                          ?>
+                        </table>
+                       
+                      
                       
                       </p>
                       <div class="container" align="center" style="width: 45rem;">

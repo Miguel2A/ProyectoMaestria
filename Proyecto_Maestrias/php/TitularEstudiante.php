@@ -36,7 +36,7 @@
 	$consulta_titu  = mysqli_query($conexion, $consulta_titu);
 	$consulta_titu  = mysqli_fetch_array($consulta_titu);
 
-	if($consulta_titu == 0){
+	if($consulta_titu['CodCohorte'] == 0){
 
 		$sql = "UPDATE persona SET Nombres='$nombre', Apellidos='$apellidos', Correo='$correo', Telefono='$telefono', Direccion='$direccion', Ciudad='$ciudad', Genero='$genero', FechaNacimiento='$fechanacimiento', EstadoCivil='$estadocivil' WHERE Cedula = '$cedula' ";
 		$sql1 = "UPDATE estudiante SET Fotografia='$fotografia', Semestre='$semestre', FechaIngreso='$fechaingreso', FechaEgreso = '$fechaegreso', CodCohorte = '$codigocohorte' WHERE CodEstudiante = '$codigo' ";
